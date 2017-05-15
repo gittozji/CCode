@@ -1,0 +1,73 @@
+FILE *fp;
+    ldata *head,*p,*p1;
+    char c='y';
+    char cc;
+    char isbnfb[20];      /*ISBN码副本*/
+    char bnamefb[30];     /*书名副本*/
+    char anamefb[20];     /*作者名副本*/
+    char stylefb[3];      /*ns(自然科学）ss(社会科学)副本*/
+    char departmentfb[20];/*出版单位副本*/
+    char timefb[11];      /*出版时间副本*/
+    double moneyfb;       /*价格副本*/
+    long int numberfb;    /*发行数量副本*/
+    if((fp=fopen("data.dat","ab"))==NULL)
+    {
+        printf("无法打开“data.dat”文件");
+        exit(0);
+    }
+    head=mm;
+    p=head;
+    printf(" 请依次输入ISBN码、图书类型（ns、ss）、价格、发行量:\n");
+    scanf("%s%s%lf%ld",isbnfb,stylefb,&moneyfb,&numberfb);
+    printf(" 请输入书名:\n");fflush(stdin);gets(bnamefb);
+    printf(" 请输入作者名:\n");fflush(stdin);gets(anamefb);
+    printf(" 请输入出版单位:\n");fflush(stdin);gets(departmentfb);
+    printf(" 请输入出版时间:\n");fflush(stdin);gets(timefb);
+
+    while(c=='y')                /*继续输入信息*/
+    {
+        strcpy(p->isbn,isbnfb);
+        strcpy(p->bname,bnamefb);
+        strcpy(p->aname,anamefb);
+        strcpy(p->style,stylefb);
+        strcpy(p->department,departmentfb);
+        strcpy(p->time,timefb);
+        p->money=moneyfb;
+        p->number=numberfb;
+
+        printf("\n是否继续输入？y/n\n");
+        fflush(stdin);
+        c=getch();
+        if(c=='y')
+        {
+            p1=mm;
+            p->next=p1;
+            p=p->next;
+            printf("\n请依次输入ISBN码、图书类型（ns、ss）、价格、发行量:\n");
+            scanf("%s%s%lf%ld",isbnfb,stylefb,&moneyfb,&numberfb);
+            printf(" 请输入书名:\n");fflush(stdin);gets(bnamefb);
+            printf(" 请输入作者名:\n");fflush(stdin);gets(anamefb);
+            printf(" 请输入出版单位:\n");fflush(stdin);gets(departmentfb);
+            printf(" 请输入出版时间:\n");fflush(stdin);gets(timefb);
+        }
+    }
+    p->next=NULL;
+    while(head!=NULL)
+    {
+        fwrite(head,sizeof(ldata),1,fp);
+        p=head;
+        head=head->next;
+        free(p);
+    }
+    system("CLS");           /*清屏函数*/
+
+    if(fclose(fp))
+        {
+            printf(" 无法关闭”acco_pass.dat“文件\n");
+            exit(0);  
+        }
+    gotoxy(33,10);
+    printf("保存成功");
+    gotoxy(24,13);
+    printf("        任意键退出\n");
+    getch();

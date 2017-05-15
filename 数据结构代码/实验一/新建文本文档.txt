@@ -1,0 +1,14 @@
+else{
+			if(isEmpty(S)){
+				pop(S,&current)
+				if(current.di==3&&!isEmpty(S)){
+					break;
+				}
+				pop(S,&current);
+				current.di++;
+				push(S,current);
+				current=nextPos(current);
+			}else{
+				break;
+			}	
+		}	

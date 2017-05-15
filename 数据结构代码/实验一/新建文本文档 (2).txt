@@ -1,0 +1,9 @@
+else{
+			pop(S,&current);
+			if(current.di==3){
+				pop(S,&current);
+			}
+			current.di++;
+			push(S,current);
+			current=nextPos(current);
+		}	
